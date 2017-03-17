@@ -1,10 +1,9 @@
 package org.nobibi.startrace;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -32,11 +31,12 @@ public class Gra {
 		
 		Graphics2D g2d = image.createGraphics();
 		// 开启抗锯齿
-		//g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.setBackground(Color.white);
 		g2d.fillRect(0, 0, width, height);
-		g2d.setBackground(Color.WHITE);
 		g2d.setPaint(Color.GRAY);
+		g2d.setStroke(new BasicStroke(2));
 		
 		Ellipse2D outerCircle = new Ellipse2D.Double();
 		int outerX = (width-outerDiameter)/2;
@@ -67,8 +67,8 @@ public class Gra {
 		swiss.swe_houses(sweDate.getJulDay(), 0, 39.90,116.30, 'B', cups, ascmc);
 
 		
-		List<Point2D> oPoints = GraphicsUtil.divideCircle(outerCircle.getCenterX(), outerCircle.getCenterY(), outerDiameter/2, 12);
-		List<Point2D> iPoints = GraphicsUtil.divideCircle(mediumCircle.getCenterX(), mediumCircle.getCenterY(), mediumDiameter/2, 12);
+		List<Point2D> oPoints = GraphicsUtil.divideCircle(outerCircle.getCenterX(), outerCircle.getCenterY(), outerDiameter/2, 12, ascmc[0]);
+		List<Point2D> iPoints = GraphicsUtil.divideCircle(mediumCircle.getCenterX(), mediumCircle.getCenterY(), mediumDiameter/2, 12, ascmc[0]);
 		
 		// 画12等分线
 		int size = oPoints.size();
@@ -81,14 +81,14 @@ public class Gra {
 		
 		g2d.setPaint(Color.GREEN);
 		for (int k = 1; k <= 12; k++) {
-			Point2D p1 = GraphicsUtil.calPositionByAngle(innerCircle.getCenterX(), innerCircle.getCenterY(), innerDiameter/2, cups[k]);
-			Point2D p2 = GraphicsUtil.calPositionByAngle(mediumCircle.getCenterX(), mediumCircle.getCenterY(), mediumDiameter/2, cups[k]);
-			//Point2D next = GraphicsUtil.calPositionByAngle(innerCircle.getCenterX(), innerCircle.getCenterY(), innerDiameter/2, cups[k==12 ? 1 : k + 1]);
-			//Point2D middle = new Point2D.Double((p2.getX() + next.getX())/2, (p2.getY() + next.getY())/2);
+			Point2D p1 = GraphicsUtil.calPositionByAngle(innerCircle.getCenterX(), innerCircle.getCenterY(), innerDiameter/2, cups[k]-ascmc[0]);
+			Point2D p2 = GraphicsUtil.calPositionByAngle(mediumCircle.getCenterX(), mediumCircle.getCenterY(), mediumDiameter/2, cups[k]-ascmc[0]);
+			Point2D next = GraphicsUtil.calPositionByAngle(innerCircle.getCenterX(), innerCircle.getCenterY(), innerDiameter/2, cups[k==12 ? 1 : k + 1]);
+			Point2D middle = new Point2D.Double((p2.getX() + next.getX())/2, (p2.getY() + next.getY())/2);
 			
 			Line2D houseLine = new Line2D.Double(p1, p2);
 			g2d.draw(houseLine);
-			//g2d.drawString(String.valueOf(k), (float)middle.getX(),(float)middle.getY());
+			g2d.drawString(String.valueOf(k), (float)middle.getX(),(float)middle.getY());
 			
 		}
 		
@@ -99,5 +99,6 @@ public class Gra {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//Swiss
 	}
 }
