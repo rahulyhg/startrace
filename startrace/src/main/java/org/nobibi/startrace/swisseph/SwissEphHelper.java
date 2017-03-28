@@ -26,6 +26,11 @@ public class SwissEphHelper {
 		return instance;
 	}
 	
+	
+	public String getPlanetName(int planet) {
+		return swissEph.swe_get_planet_name(planet);
+	}
+	
 	/**
 	 * 计算行星位置
 	 * 返回double[5]
