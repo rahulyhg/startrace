@@ -13,6 +13,7 @@ import swisseph.SwissEph;
  */
 public class SwissEphHelper {
 	
+	
 	private static SwissEphHelper instance = new SwissEphHelper();
 	
 	private SwissEph swissEph = null;
@@ -27,6 +28,14 @@ public class SwissEphHelper {
 	
 	/**
 	 * 计算行星位置
+	 * 返回double[5]
+	 * double[0] 黄经
+	 * double[1] 黄纬
+	 * double[2] 距离
+	 * double[3] 黄经速度,负值则代表逆行
+	 * double[4] 黄纬速度
+	 * double[5] speed in dist
+	 * 
 	 * @param utc UTC时间,传入时需先行计算时差,如北京时间需要将时间减8小时
 	 * @param planet 需要计算的行星,参见 SweConst.SE_*
 	 * @return double[longitude, latitude, distance, speed in long, speed in lat, speed in dist] 
@@ -34,12 +43,10 @@ public class SwissEphHelper {
 	public double[] calPlanetPos(Calendar utc,int planet) {
 		double[] result = new double[6];
 		
-		swissEph.calc(getSweDate(utc).getJulDay(), planet, 2, result);
+		swissEph.calc(getSweDate(utc).getJulDay(), planet, SweConst.SEFLG_SPEED, result);
 		
 		return result;
 	}
-	
-	
 	
 	/**
 	 * 通过时间,经纬度,及指定的分宫制,计算1-12宫的宫头位置。	
@@ -64,6 +71,29 @@ public class SwissEphHelper {
 		double[] result = new double[20];
 		StringBuffer msg = new StringBuffer();
 		swissEph.swe_pheno_ut(getSweDate(utc).getJulDay(), planet, SweConst.SEFLG_SWIEPH, result, msg);
+		return result;
+	}
+	
+	/**
+	 * 计算行星的燃烧状态
+	 * 0: 无
+	 * 1: 在日核内 
+	 * 2: 灼烧
+	 * 3: 在日光下
+	 * @param sunLng
+	 * @param planetLng
+	 * @return
+	 */
+	public int calPlanetBurn(double sunLng, double planetLng) {
+		double angle = Math.abs(sunLng - planetLng);
+		int result = 0;
+		if (angle <= 18/60) {
+			result = 1;
+		} else if (angle <= 8.5) {
+			result = 2;
+		} else if (angle <= 17) {
+			result = 3;
+		}
 		return result;
 	}
 	
