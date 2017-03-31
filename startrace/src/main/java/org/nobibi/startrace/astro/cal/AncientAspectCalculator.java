@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.nobibi.startrace.astro.bean.Aspect;
-import org.nobibi.startrace.astro.bean.Aspect.AspectType;
+import org.nobibi.startrace.astro.constant.AspectType;
 
 import swisseph.SweConst;
 
 /**
- * 古典模式相位计算方法
- * 依据星体的星光（Moiety of Orb）
+ * 古典占星中相位计算方法
+ * 依据星体的星光（Moiety of Orb）来计算相位。而非按照相位类型来计算。
+ * 例
+ * 太阳的星光为15,月亮为12,则日月产生相位的容许度为（15+12）/ 2 = 13.5度。
  * 
  * @author apatheia
  *
@@ -31,8 +33,8 @@ public class AncientAspectCalculator {
 		influence.put("P_"+SweConst.SE_NEPTUNE, 5.0);
 		influence.put("P_"+SweConst.SE_PLUTO, 5.0);
 		influence.put("P_"+SweConst.SE_TRUE_NODE, 5.0);
-		influence.put("P_"+SweConst.SE_ASC, 5.0);
-		influence.put("P_"+SweConst.SE_MC, 5.0);
+		influence.put("P_1001", 5.0);
+		influence.put("P_1002", 5.0);
 		
 	}
 	
@@ -50,14 +52,16 @@ public class AncientAspectCalculator {
 		double d2 = influence.containsKey("P_"+planet2) ? influence.get("P_"+planet2) : 5.0;
 		double d = (d1 + d2) / 2;
 		
-		double degree =  Math.abs(longitude1 - longitude2);
+		double degree1 =  Math.abs(longitude1 - longitude2);
+		double degree2 = 360 - degree1;
+		double degree = degree1 < degree2 ? degree1 : degree2;
 		
 		for (AspectType type : AspectType.values()) {
 			int value = type.getValue();
 			double lower = value - d;
 			double upper = value + d;
 			if (degree >= lower && degree <= upper) {
-				int[] exactValue = AstroCalculator.trans2Degree(degree);
+				int[] exactValue = AstroCalculator.transDigit2Degree(degree);
 				Aspect aspect = new Aspect(type);
 				aspect.setDegree(exactValue[0]);
 				aspect.setMinute(exactValue[1]);

@@ -19,7 +19,8 @@ public class SwissEphHelper {
 	private SwissEph swissEph = null;
 	
 	private SwissEphHelper() {
-		this.swissEph = new SwissEph("");
+		//this.swissEph = new SwissEph();
+		this.swissEph = new SwissEph("C:\\Users\\apatheia\\git\\startrace\\startrace\\src\\main\\resources\\swefile");
 	}
 	
 	public static SwissEphHelper getInstance() {
@@ -47,8 +48,8 @@ public class SwissEphHelper {
 	 */
 	public double[] calPlanetPos(Calendar utc,int planet) {
 		double[] result = new double[6];
-		
-		swissEph.calc(getSweDate(utc).getJulDay(), planet, SweConst.SEFLG_SPEED, result);
+		SweDate sweDate = getSweDate(utc);
+		swissEph.swe_calc(sweDate.getJulDay()+SweDate.getDeltaT(sweDate.getJulDay()), planet, SweConst.SEFLG_SPEED, result, null);
 		
 		return result;
 	}
@@ -72,35 +73,8 @@ public class SwissEphHelper {
 		return null;
 	}
 	
-	public double[] calPhase(Calendar utc, int planet) {
-		double[] result = new double[20];
-		StringBuffer msg = new StringBuffer();
-		swissEph.swe_pheno_ut(getSweDate(utc).getJulDay(), planet, SweConst.SEFLG_SWIEPH, result, msg);
-		return result;
-	}
 	
-	/**
-	 * 计算行星的燃烧状态
-	 * 0: 无
-	 * 1: 在日核内 
-	 * 2: 灼烧
-	 * 3: 在日光下
-	 * @param sunLng
-	 * @param planetLng
-	 * @return
-	 */
-	public int calPlanetBurn(double sunLng, double planetLng) {
-		double angle = Math.abs(sunLng - planetLng);
-		int result = 0;
-		if (angle <= 18/60) {
-			result = 1;
-		} else if (angle <= 8.5) {
-			result = 2;
-		} else if (angle <= 17) {
-			result = 3;
-		}
-		return result;
-	}
+	
 	
 	/**
 	 * 根据UTC时间获取SweDate
@@ -108,9 +82,12 @@ public class SwissEphHelper {
 	 * @return
 	 */
 	private SweDate getSweDate(Calendar utc) {
-		double hour = utc.get(Calendar.HOUR_OF_DAY) + (utc.get(Calendar.MINUTE)/60);
+		double minute = utc.get(Calendar.MINUTE) / 60.0;
+		double sec = utc.get(Calendar.MINUTE) / 3600.0;
+		double hour = utc.get(Calendar.HOUR_OF_DAY) + minute + sec;
 		SweDate sweDate = new SweDate(utc.get(Calendar.YEAR),utc.get(Calendar.MONTH)+1,
 				utc.get(Calendar.DAY_OF_MONTH),hour);
+		
 		return sweDate;
 	}
 }

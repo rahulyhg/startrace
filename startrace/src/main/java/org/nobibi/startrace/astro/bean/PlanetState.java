@@ -13,11 +13,24 @@ public class PlanetState {
 	private int degree;
 	
 	private int minute;
+	
+	private int second;
 		
 	private double longitude;
+	
+	private int house;
 		
 	private Map<String, Object> attributes;;
 	
+	public PlanetState() {
+		super();
+	}
+
+	public PlanetState(int nO, double longitude) {
+		super();
+		NO = nO;
+		this.longitude = longitude;
+	}
 
 	public int getNO() {
 		return NO;
@@ -74,4 +87,22 @@ public class PlanetState {
 	public void setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
 	}
+
+	public int getHouse() {
+		return house;
+	}
+
+	public void setHouse(int house) {
+		this.house = house;
+	}
+
+	public int getSecond() {
+		return second;
+	}
+
+	public void setSecond(int second) {
+		this.second = second;
+	}
+	
+	
 }
