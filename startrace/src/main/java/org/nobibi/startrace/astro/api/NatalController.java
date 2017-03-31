@@ -27,6 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import swisseph.SweConst;
 
+/**
+ * 
+ * 本命盘相关API
+ * @author apatheia
+ *
+ */
+
 @Controller
 @RequestMapping(value="/api/natal")
 public class NatalController {
@@ -34,11 +41,12 @@ public class NatalController {
 	//private static final Logger LOG = LoggerFactory.getLogger(NatalController.class);
 	
 	
-	@RequestMapping(value="")
+	@RequestMapping(value="/ancient")
 	@ResponseBody
-	public void getNatal(@RequestParam(name="date",required=false) String dateStr,
+	public void getAncient(@RequestParam(name="date",required=false) String dateStr,
 						 @RequestParam(name="longitude",required=true) double longitude,
 						 @RequestParam(name="latitude",required=true) double latitude,
+						 @RequestParam(name="hsys",required=false) Integer hsys,
 						 HttpServletResponse response) throws IOException, ParseException {
 		
 		Calendar cal = Calendar.getInstance();
@@ -47,10 +55,12 @@ public class NatalController {
 		}
 		cal.add(Calendar.HOUR_OF_DAY, -8);
 		
+		hsys = hsys == null ? SweConst.SE_HSYS_ALCABITIUS : hsys;
+		
 		SwissEphHelper swissEph = SwissEphHelper.getInstance();
 		
 		//1.宫位数据
-		double[] houses = swissEph.calHouses(cal, longitude, latitude, SweConst.SE_HSYS_PLACIDUS);
+		double[] houses = swissEph.calHouses(cal, longitude, latitude, hsys);
 
 		
 		//2.获取行星状态数据
@@ -130,4 +140,5 @@ public class NatalController {
 		}
 		return -1;
 	}
+	
 }
