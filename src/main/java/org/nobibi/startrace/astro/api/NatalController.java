@@ -47,6 +47,7 @@ public class NatalController {
 						 @RequestParam(name="longitude",required=true) double longitude,
 						 @RequestParam(name="latitude",required=true) double latitude,
 						 @RequestParam(name="hsys",required=false) Integer hsys,
+						 @RequestParam(name="jsonpCallback",required=false) String jsonpCallback,
 						 HttpServletResponse response) throws IOException, ParseException {
 		
 		Calendar cal = Calendar.getInstance();
@@ -126,7 +127,7 @@ public class NatalController {
 		resultMap.put("houses", houses);
 		resultMap.put("aspects", aspectMap);
 		
-		WebUtil.responseJson(response, resultMap);
+		WebUtil.responseJson(response, resultMap, jsonpCallback);
 		
 	}
 	
