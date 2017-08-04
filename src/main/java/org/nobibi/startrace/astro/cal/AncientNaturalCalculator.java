@@ -8,6 +8,22 @@ import swisseph.SweConst;
 
 public class AncientNaturalCalculator {
 	
+	/**
+	 * 获取行星的先天力量
+	 * 状态标识
+	 * 入庙: 5
+	 * 擢升: 4
+	 * 三分: 3
+	 * 界: 2
+	 * 面: 1
+	 * 无状态: 0
+	 * 弱: -5
+	 * 陷: -4
+	 * 游走: -1
+	 * @param planet
+	 * @param longitude
+	 * @return  "4,3,2.."
+	 */
 	public static List<String> getPower(int planet, double longitude) {
 		return null;
 	}

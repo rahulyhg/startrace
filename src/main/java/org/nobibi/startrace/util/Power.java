@@ -19,7 +19,7 @@ public class Power {
 	        if (p == SweConst.SE_EARTH) continue;
 	        List<String> power = new ArrayList<String>();
 	        
-	        for (int i = 1; i <= 360;i++) {
+	        for (int i = 0; i < 360;i++) {
 	        	StringBuilder sb = new StringBuilder();
 	        	switch(p){
 	        		case SweConst.SE_SUN:
@@ -32,6 +32,7 @@ public class Power {
 	        			} else if (bet(i,300,330)) {
 	        				sb.append("-5,");
 	        			}
+	        			break;
 	        		case SweConst.SE_MOON:
 	        			if (bet(i,30,60)) {
 	        				sb.append("4,");
@@ -42,6 +43,7 @@ public class Power {
 	        			} else if (bet(i,270,300)) {
 	        				sb.append("-5,");
 	        			}
+	        			break;
 	        		case SweConst.SE_MERCURY:
 	        			if (bet(i,150,180)) {
 	        				sb.append("4,5,");
@@ -52,6 +54,7 @@ public class Power {
 	        			} else if (bet(i,240,270)) {
 	        				sb.append("-5,");
 	        			}	
+	        			break;
 	        		case SweConst.SE_VENUS:
 	        			if (bet(i,330,360)) {
 	        				sb.append("4,");
@@ -61,7 +64,8 @@ public class Power {
 	        				sb.append("-4,");
 	        			} else if (bet(i,210,240) || bet(i,0,30)) {
 	        				sb.append("-5,");
-	        			}	
+	        			}
+	        			break;
 	        		case SweConst.SE_MARS:
 	        			if (bet(i,270,300)) {
 	        				sb.append("4,");
@@ -72,6 +76,7 @@ public class Power {
 	        			} else if (bet(i,180,210) || bet(i,30,60)) {
 	        				sb.append("-5,");
 	        			}	
+	        			break;
 	        		case SweConst.SE_JUPITER:
 	        			if (bet(i,90,120)) {
 	        				sb.append("4,");
@@ -82,6 +87,7 @@ public class Power {
 	        			} else if (bet(i,150,180) || bet(i,60,90)) {
 	        				sb.append("-5,");
 	        			}
+	        			break;
 	        		case SweConst.SE_SATURN:
 	        			if (bet(i,180,210)) {
 	        				sb.append("4,");
@@ -92,6 +98,7 @@ public class Power {
 	        			} else if (bet(i,90,150)) {
 	        				sb.append("-5,");
 	        			}
+	        			break;
 	        	}
 	        		
 	        	if (sb.length() > 0) {
