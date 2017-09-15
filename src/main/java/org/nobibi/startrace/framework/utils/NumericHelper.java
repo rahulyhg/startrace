@@ -7,12 +7,12 @@
  * @version: V1.0
  */
 
-package org.nobibi.startrace.common.utils;
+package org.nobibi.startrace.framework.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.nobibi.startrace.common.plugins.log.Log;
+import org.nobibi.startrace.framework.plugins.log.Log;
 
 /**
  * 

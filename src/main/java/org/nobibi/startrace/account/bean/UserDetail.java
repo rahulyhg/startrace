@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +13,7 @@ public class UserDetail implements Serializable {
 	
 	private static final long serialVersionUID = -1383886819675144550L;
 	
+	@Id
 	private String id;
 	
 	private String nickname;

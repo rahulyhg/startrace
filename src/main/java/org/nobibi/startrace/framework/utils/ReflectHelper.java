@@ -1,4 +1,4 @@
-package org.nobibi.startrace.common.utils;
+package org.nobibi.startrace.framework.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.nobibi.startrace.common.plugins.log.Log;
+import org.nobibi.startrace.framework.plugins.log.Log;
 import org.slf4j.Logger;
 
 /**

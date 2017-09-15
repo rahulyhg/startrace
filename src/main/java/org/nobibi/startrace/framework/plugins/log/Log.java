@@ -6,7 +6,7 @@
  * @version: V1.0  
  */
 
-package org.nobibi.startrace.common.plugins.log;
+package org.nobibi.startrace.framework.plugins.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

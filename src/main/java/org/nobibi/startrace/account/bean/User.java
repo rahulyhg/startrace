@@ -31,7 +31,9 @@ public class User implements Serializable{
 	
 	private String registerIp;
 	
+	// 0: 账号未激活; 1:正常; 9:账号被锁定; 99: 账号被禁用
 	private int status;
+	
 	@Transient
 	private UserDetail userDetail;
 
@@ -115,6 +117,11 @@ public class User implements Serializable{
 		this.status = status;
 	}
 
+	public boolean isEnabled() {
+		return this.status == 1;
+	}
 	
-	
+	public boolean isLocked() {
+		return this.status == 9;
+	}
 }

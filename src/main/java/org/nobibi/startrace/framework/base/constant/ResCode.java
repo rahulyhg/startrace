@@ -1,4 +1,4 @@
-package org.nobibi.startrace.common.web;
+package org.nobibi.startrace.framework.base.constant;
 
 public class ResCode {
 	
@@ -7,4 +7,6 @@ public class ResCode {
 	public static final String SUCCESS = "success";
 	
 	public static final String SERVER_ERROR = "server_error";
+	
+	public static final String CREDENTIALS_INVALID = "credentials_invalid";
 }

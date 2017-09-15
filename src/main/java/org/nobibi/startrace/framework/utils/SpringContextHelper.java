@@ -7,7 +7,7 @@
  * @version: V1.0  
  */
 
-package org.nobibi.startrace.common.utils;
+package org.nobibi.startrace.framework.utils;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;

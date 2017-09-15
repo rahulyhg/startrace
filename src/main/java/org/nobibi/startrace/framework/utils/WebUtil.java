@@ -1,10 +1,12 @@
-package org.nobibi.startrace.common.web;
+package org.nobibi.startrace.framework.utils;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,5 +84,26 @@ public class WebUtil {
 	}
 	public static String getStrParam(HttpServletRequest request, String paramName) {
 		return request.getParameter(paramName);
+	}
+	
+	public static String getIpAddress(HttpServletRequest request) {
+		List<String> checkList = new ArrayList<String>();
+        checkList.add("X-Forwarded-For");
+        checkList.add("Proxy-Client-IP");
+        checkList.add("WL-Proxy-Client-IP");
+        checkList.add("HTTP_CLIENT_IP");
+        checkList.add("HTTP_X_FORWARDED_FOR");
+        String ip = "";
+        for (String header : checkList) {
+            ip = request.getHeader(header);
+            if (StringHelper.isNotBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                break;
+            }
+        }
+        if (StringHelper.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        return ip;
 	}
 }

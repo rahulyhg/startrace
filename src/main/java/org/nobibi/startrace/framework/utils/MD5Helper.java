@@ -1,4 +1,4 @@
-package org.nobibi.startrace.common.utils;
+package org.nobibi.startrace.framework.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
