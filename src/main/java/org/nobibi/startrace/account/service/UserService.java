@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.nobibi.startrace.account.bean.User;
 import org.nobibi.startrace.account.persistence.dao.UserDao;
-import org.nobibi.startrace.account.persistence.dao.UserMapper;
 import org.nobibi.startrace.framework.plugins.log.Log;
 import org.nobibi.startrace.framework.utils.MD5Helper;
 import org.nobibi.startrace.framework.utils.UUIDGen;
+import org.nobibi.startrace.framework.utils.ValidateHelper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -26,10 +26,7 @@ public class UserService {
 	
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private UserMapper userMapper;
-	
+		
 	public void register(User user) {
 		if (user == null) return;
 		String uid = UUIDGen.getUUID();
@@ -40,7 +37,7 @@ public class UserService {
 		userDao.save(user);
 		
 		if (user.getRegisterType() != null && user.getRegisterType().equals("mail")) {
-			sendActMail(user);
+			//sendActMail(user);
 		}
 	}
 	
@@ -75,8 +72,18 @@ public class UserService {
 	}
 	
 	public User getUser(String key) {
-		return userMapper.getUser(key);
+		return userDao.getUser(key);
 		
+	}
+	
+	public boolean isUsernameRepeat(String username) {
+		if (ValidateHelper.email(username)) {
+			return userDao.countByEmail(username) > 0;
+		}
+		if (ValidateHelper.mobile(username)) {
+			return userDao.countByMobile(username) > 0;
+		}
+		return false;
 	}
 	
 }
